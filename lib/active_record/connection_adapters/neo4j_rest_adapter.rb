@@ -36,6 +36,8 @@ module ActiveRecord
         
         # Create model index if it doesn't exist
         neo_server.create_node_index(INDICES[:model]) if not (!!(node_indices = neo_server.list_node_indexes) and !!node_indices[INDICES[:model]])
+
+        @visitor ||= Arel::Visitors::Neo4j::Sql::Neo4jVisitor.new(self)
       end
 
       def supports_migrations?
